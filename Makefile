@@ -68,7 +68,7 @@ VERBOSE=
 # added to the build
 #
 
-COMPONENTS=
+COMPONENTS=CUSTOM_DESIGN_MODUS
 
 # Like COMPONENTS, but disable optional code that was enabled by default.
 DISABLE_COMPONENTS=BSP_DESIGN_MODUS
