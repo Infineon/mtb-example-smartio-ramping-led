@@ -37,7 +37,7 @@
 * system or application assumes all risk of such use and in doing so agrees to
 * indemnify Cypress against all liability.
 *******************************************************************************/
-
+/* Header file includes. */
 #include "cy_pdl.h"
 #include "cyhal.h"
 #include "cycfg.h"
@@ -48,8 +48,8 @@
 ********************************************************************************
 * Summary:
 * This is the main function for CM4 CPU. It does...
-*    1. Initialize and Start the TCPWM
-*    2. Intialize and Start the Smart IO to generate a ramping signal to drive
+*    1. Initialize and start the TCPWM
+*    2. Initialize and start the Smart IO to generate a ramping signal to drive
 *       an external LED.  
 *
 * Parameters:
@@ -86,11 +86,12 @@ int main(void)
     /* Start the TCPWM block */
     Cy_TCPWM_TriggerStart(PWM_HW, PWM_MASK);
 
+
     /* Initialize the SmartIO block. The Smart I/O implements a sequential
      * circuit to generate a square wave signal with time varying duty cycle.
      * This signal drives an LED creating visual perception of breathing LED */
 
-    Cy_SmartIO_Init(SMARTIO_PRT9, &SmartIO_config);
+    Cy_SmartIO_Init(SMARTIO_PRT9, &smart_io_config);
 
     /* Enable the Smart I/O */
     Cy_SmartIO_Enable(SMARTIO_PRT9);
