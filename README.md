@@ -2,6 +2,8 @@
 
 This example uses a PWM resource and Smart I/O™ in PSoC 6 MCU to implement a ramping LED, where an LED gradually cycles through increasing and decreasing brightness levels. There is no CPU usage except for the initialization of PWM and Smart I/O.
 
+[Provide feedback on this Code Example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMTk0OTAiLCJTcGVjIE51bWJlciI6IjAwMi0xOTQ5MCIsIkRvYyBUaXRsZSI6IlBTb0MgNiBNQ1U6IFJhbXBpbmcgTEVEIFVzaW5nIFNtYXJ0IEkvTyIsInJpZCI6InZrdmsiLCJEb2MgdmVyc2lvbiI6IjIuMi4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+
 ## Requirements
 
 - [ModusToolbox® software](https://www.cypress.com/products/modustoolbox-software-environment) v2.2  
@@ -28,6 +30,8 @@ This example uses a PWM resource and Smart I/O™ in PSoC 6 MCU to implement a r
 - [PSoC 62S1 Wi-Fi BT Pioneer Kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (CYW9P62S1-43012EVB-01)
 - [PSoC 62S3 Wi-Fi BT Prototyping Kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (CY8CPROTO-062S3-4343W)
 - [PSoC 64 Secure Boot Wi-Fi BT Pioneer Kit](http://www.cypress.com/CY8CKIT-064B0S2-4343W) (CY8CKIT-064B0S2-4343W)
+- Rapid IoT Connect Platform RP01 Feather Kit (CYSBSYSKIT-01)
+- Rapid IoT Connect Developer Kit (CYSBSYSKIT-DEV-01)
 
 ## Hardware Setup
 
@@ -123,19 +127,22 @@ If using a PSoC 64 Secure MCU kit (like CY8CKIT-064B0S2-4343W), the PSoC 64 Secu
 
     **Table 1. LED Pin Connection**
 
-    |    Board               |  Smart I/O Output Pin   |  LED Pin    |  
-    | -----------------------|-------------------------|-------------|
-    | CY8CKIT-062-BLE        |    P9[1]                | P13[7]      |
-    | CY8CKIT-062-WIFI-BT    |    P9[1]                | P13[7]      |
-    | CY8CPROTO-062-4343W    |    P9[1]                | P13[7]      |    
-    | CY8CPROTO-063-BLE      |    P9[1]                | P6[3]       |
-    | CY8CPROTO-062S3-4343W  |    P9[1]                | P11[1]      | 
-    | CY8CKIT-062S2-43012    |    A9                   | LED.R       |   
-    | CYW9P62S1-43438EVB-01  |    A9                   | LED.R       | 
-    | CYW9P62S1-43012EVB-01  |    IO11<sup>**1**</sup> | LED.R       |
-    | CY8CKIT-064B0S2-4343W  |    A9                   | LED.R       |
+    |    Board               |  Smart I/O Output Pin   |  LED Pin                     |
+    | -----------------------|-------------------------|------------------------------|
+    | CY8CKIT-062-BLE        |    P9[1]                | P13[7]                       |
+    | CY8CKIT-062-WIFI-BT    |    P9[1]                | P13[7]                       |
+    | CY8CPROTO-062-4343W    |    P9[1]                | P13[7]                       |
+    | CY8CPROTO-063-BLE      |    P9[1]                | P6[3]                        |
+    | CY8CPROTO-062S3-4343W  |    P9[1]                | P11[1]                       |
+    | CY8CKIT-062S2-43012    |    A9                   | LED.R                        |
+    | CYW9P62S1-43438EVB-01  |    A9                   | LED.R                        |
+    | CYW9P62S1-43012EVB-01  |    IO11<sup>**1**</sup> | LED.R                        |
+    | CY8CKIT-064B0S2-4343W  |    A9                   | LED.R                        |
+    | CYSBSYSKIT-01          |    P9[1]                | External LED<sup>**2**</sup> |
+    | CYSBSYSKIT-DEV-01      |    P9[1]                | External LED<sup>**2**</sup> |
 
     **Note:**<br> **1**. By default, IO11 of the CYW9P62S1-43012EVB-01 board is not connected to the MCU. Remove **R29** and populate **R152** with a 0-ohm resistor to connect to the MCU pin. See the board schematics for more details. 
+    **Note:**<br> **2**. On CYSBSYSKIT-01 & CYSBSYSKIT-DEV-01, the USER LED is not available on the feather header, so the user has to connect the Smart I/O pin to an external LED pulled-up to 1.8v similar to USER LED on CYSBSYSKIT-01 & CYSBSYSKIT-DEV-01. See the board schematics for more details. 
 
 ## Debugging
 
@@ -232,7 +239,7 @@ Figure 6 and Figure 7 show the Peripheral Clock configuration for Smart I/O and 
 | [CY8CPROTO-063-BLE](https://www.cypress.com/CY8CPROTO-063-BLE) PSoC 6 BLE Prototyping Kit | [CY8CPROTO-062-4343W](https://www.cypress.com/CY8CPROTO-062-4343W) PSoC 6 Wi-Fi BT Prototyping Kit |
 | [CY8CKIT-062S2-43012](https://www.cypress.com/CY8CKIT-062S2-43012) PSoC 62S2 Wi-Fi BT Pioneer Kit | [CY8CPROTO-062S3-4343W](https://www.cypress.com/CY8CPROTO-062S3-4343W) PSoC 62S3 Wi-Fi BT Prototyping Kit |
 | [CYW9P62S1-43438EVB-01](https://www.cypress.com/CYW9P62S1-43438EVB-01) PSoC 62S1 Wi-Fi BT Pioneer Kit | [CYW9P62S1-43012EVB-01](https://www.cypress.com/CYW9P62S1-43012EVB-01) PSoC 62S1 Wi-Fi BT Pioneer Kit |                                                              |
-|[CY8CKIT-064B0S2-4343W](http://www.cypress.com/CY8CKIT-064B0S2-4343W) PSoC 64 Secure Boot Wi-Fi BT Pioneer Kit|  |                                                              |
+|[CY8CKIT-064B0S2-4343W](http://www.cypress.com/CY8CKIT-064B0S2-4343W) PSoC 64 Secure Boot Wi-Fi BT Pioneer Kit| [CYSBSYSKIT-01] Rapid IoT Connect Platform RP01 Feather Kit | [CYSBSYSKIT-DEV-01] Rapid IoT Connect Developer Kit |
 | **Libraries**                                                 |                                                              |
 | PSoC 6 Peripheral Driver Library (PDL) and docs  | [mtb-pdl-cat1](https://github.com/cypresssemiconductorco/mtb-pdl-cat1) on GitHub |
 | Cypress Hardware Abstraction Layer (HAL) Library and docs     | [mtb-hal-cat1](https://github.com/cypresssemiconductorco/mtb-hal-cat1) on GitHub |
@@ -260,6 +267,8 @@ Document Title: CE219490 - PSoC 6 MCU: Ramping LED using Smart I/O
 | 1.1.0   | Modified project folder structure       |
 | 1.2.0   | Updated to support ModusToolbox software v2.1, Added new kits |
 | 2.0.0   | Major update to support ModusToolbox software v2.2, added support for new kits<br> This version is not backward compatible with ModusToolbox software v2.1  |
+| 2.1.0   | Added CUSTOM_DESIGN_MODUS for CYSBSYSKIT-01 Rapid IoT Connect Platform RP01 Feather Kit |
+| 2.2.0   | Added CUSTOM_DESIGN_MODUS for CYSBSYSKIT-DEV-01 Rapid IoT Connect Developer Kit |
 ------
 
 All other trademarks or registered trademarks referenced herein are the property of their respective owners.
