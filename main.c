@@ -68,6 +68,16 @@ int main(void)
 {
     cy_rslt_t result;
 
+    #if defined(CY_DEVICE_SECURE)
+        cyhal_wdt_t wdt_obj;
+        /* Clear watchdog timer so that it doesn't trigger a reset */
+
+    
+        result = cyhal_wdt_init(&wdt_obj, cyhal_wdt_get_max_timeout_ms());
+        CY_ASSERT(CY_RSLT_SUCCESS == result);
+        cyhal_wdt_free(&wdt_obj);
+    #endif
+
     /* Initialize the device and board peripherals */
     result = cybsp_init() ;
     if (result != CY_RSLT_SUCCESS)
