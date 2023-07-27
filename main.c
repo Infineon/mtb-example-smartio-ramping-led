@@ -1,13 +1,13 @@
-/******************************************************************************
+/*******************************************************************************
 * File Name: main.c
 *
-* Description: This is the source code for the PSoC 6 MCU Ramping LED using 
+* Description: This example project demonstrates the Ramping an LED using 
 * Smart I/O Example for ModusToolbox.
 *
 * Related Document: See README.md
 *
-*******************************************************************************
-* Copyright 2019-2022, Cypress Semiconductor Corporation (an Infineon company) or
+********************************************************************************
+* Copyright 2019-2023, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related
@@ -39,21 +39,57 @@
 * so agrees to indemnify Cypress against all liability.
 *******************************************************************************/
 
-
-/******************************************************************************
-* Include header files
-******************************************************************************/
+/*******************************************************************************
+* Header Files
+*******************************************************************************/
 #include "cy_pdl.h"
 #include "cyhal.h"
-#include "cycfg.h"
 #include "cybsp.h"
+#include "cy_retarget_io.h"
+
+/*******************************************************************************
+* Macros
+*******************************************************************************/
+
+/*******************************************************************************
+* Global Variables
+********************************************************************************/
+
+/*******************************************************************************
+* Function Prototypes
+*******************************************************************************/
+
+/*******************************************************************************
+* Function Definitions
+*******************************************************************************/
+
+/*******************************************************************************
+* Function Name: handle_error
+********************************************************************************
+* Summary:
+* User defined error handling function
+*
+* Parameters:
+*  uint32_t status - status indicates success or failure
+*
+* Return:
+*  void
+*
+*******************************************************************************/
+void handle_error(uint32_t status)
+{
+    if (status != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
+}
 
 /*******************************************************************************
 * Function Name: main
 ********************************************************************************
 * Summary:
-* This is the main function for CM4 CPU. It does...
-*    1. Initialize and start the TCPWM
+* This is the main function enrty for the CPU. It does...
+*    1. Initialize the board, retarget-io and PWM
 *    2. Initialize and start the Smart IO to generate a ramping signal to drive
 *       an external LED.  
 *
@@ -67,31 +103,38 @@
 int main(void)
 {
     cy_rslt_t result;
+    cy_en_smartio_status_t status;
 
     #if defined(CY_DEVICE_SECURE)
         cyhal_wdt_t wdt_obj;
         /* Clear watchdog timer so that it doesn't trigger a reset */
-
-    
         result = cyhal_wdt_init(&wdt_obj, cyhal_wdt_get_max_timeout_ms());
         CY_ASSERT(CY_RSLT_SUCCESS == result);
         cyhal_wdt_free(&wdt_obj);
     #endif
 
     /* Initialize the device and board peripherals */
-    result = cybsp_init() ;
-    if (result != CY_RSLT_SUCCESS)
-    {
-        CY_ASSERT(0);
-    }
+    result = cybsp_init();
+    /* Board init failed. Stop program execution */
+    handle_error(result);
 
-    /* Enable global interrupts. */
+    /* Initialize retarget-io for uart logs */
+    result = cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX,
+                                                      CY_RETARGET_IO_BAUDRATE);
+    /* Retarget-io init failed. Stop program execution */
+    handle_error(result);
+
+    /* \x1b[2J\x1b[;H - ANSI ESC sequence for clear screen */
+    printf("\x1b[2J\x1b[;H");
+
+    printf("*************** SmartIO: Ramping LED *************** \r\n\n");
+
+    /* Enable interrupts */
     __enable_irq();
 
     /* Initialize the counter in the TCPWM block for the PWM operation.
      * The PWM is configured to generate a 25 Hz square wave signal
      * with 50% duty cycle */
-
     Cy_TCPWM_PWM_Init(PWM_HW, PWM_NUM, &PWM_config);
 
     /* Enable the TCPWM for PWM mode of operation */
@@ -99,17 +142,28 @@ int main(void)
     Cy_TCPWM_PWM_Enable(PWM_HW, PWM_NUM);
 
     /* Start the TCPWM block */
-    
+
     Cy_TCPWM_TriggerStart_Single(PWM_HW, PWM_NUM);
-    
+
     /* Initialize the SmartIO block. The Smart I/O implements a sequential
      * circuit to generate a square wave signal with time varying duty cycle.
      * This signal drives an LED creating visual perception of breathing LED */
 
-    Cy_SmartIO_Init(SMARTIO_PRT9, &smart_io_config);
+    status = Cy_SmartIO_Init(smart_io_HW, &smart_io_config);
+
+    if(CY_SMARTIO_SUCCESS != status)
+    {
+        printf("SmartIO init failed with error: %lu\r\n",
+                                                 (unsigned long) status);
+        CY_ASSERT(0);
+    }
 
     /* Enable the Smart I/O */
-    Cy_SmartIO_Enable(SMARTIO_PRT9);
+    Cy_SmartIO_Enable(smart_io_HW);
+
+    printf("SmartIO init done, output is enabled on P%d_%d \r\n",
+                                                SMART_IO_OUTPUT_PIN_PORT_NUM,
+                                                SMART_IO_OUTPUT_PIN_NUM);
 
     /* LED breathing effect is generated using PWM and Smart I/O 
      * hardware peripherals - no CPU is used */

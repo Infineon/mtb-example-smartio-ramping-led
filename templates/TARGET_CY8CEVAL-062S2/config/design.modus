@@ -540,6 +540,7 @@
                 <Block location="ioss[0].port[9].pin[1]">
                     <Alias value="CYBSP_A9"/>
                     <Alias value="CYBSP_J2_4"/>
+                    <Alias value="SMART_IO_OUTPUT_PIN"/>
                     <Personality template="pin" version="3.0">
                         <Param id="DriveModes" value="CY_GPIO_DM_STRONG_IN_OFF"/>
                         <Param id="initialState" value="1"/>
@@ -711,6 +712,7 @@
                     <Personality template="fll" version="4.0">
                         <Param id="configuration" value="auto"/>
                         <Param id="desiredFrequency" value="100.000"/>
+                        <Param id="enableOutputDivider" value="false"/>
                     </Personality>
                 </Block>
                 <Block location="srss[0].clock[0].hfclk[0]">
