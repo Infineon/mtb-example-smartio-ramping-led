@@ -4,7 +4,7 @@ This example uses a PWM resource and smart I/O to implement a ramping LED, where
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-smartio-ramping-led)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMTk0OTAiLCJTcGVjIE51bWJlciI6IjAwMi0xOTQ5MCIsIkRvYyBUaXRsZSI6IlJhbXBpbmcgTEVEIHVzaW5nIHNtYXJ0IEkvTyIsInJpZCI6InZhaXIiLCJEb2MgdmVyc2lvbiI6IjMuMy4xIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMTk0OTAiLCJTcGVjIE51bWJlciI6IjAwMi0xOTQ5MCIsIkRvYyBUaXRsZSI6IlJhbXBpbmcgTEVEIHVzaW5nIHNtYXJ0IEkvTyIsInJpZCI6InZhaXIiLCJEb2MgdmVyc2lvbiI6IjMuMy4yIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
@@ -396,6 +396,7 @@ Document title: *CE219490* - *Ramping LED using smart I/O*
  3.2.1   | Readme updated
  3.3.0   | Added support for new BSPs
  3.3.1   | Updated MPN CYW89829B01MKSBG to CYW89829B0232
+ 3.3.2   | Updated MPN CYW89829B0232 to CYW89829B1232 and MPN CYW20829B0LKML to CYW20829B1010
 <br>
 
 

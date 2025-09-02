@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.10.0" toolsPackage="ModusToolbox 3.1.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
     <Devices>
-        <Device mpn="CYW89829B0232">
+        <Device mpn="CYW89829B1232">
             <BlockConfig>
                 <Block location="ioss[0].port[0].pin[0]">
                     <Alias value="CYBSP_D6"/>
